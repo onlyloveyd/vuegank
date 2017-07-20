@@ -8,16 +8,10 @@
       <h4 class="text-center">我们不生产干货</h4>
       <h4 class="text-center">我们是技术界的搬运工</h4>
     </div>
-
   </div>
 </template>
 <script>
   export default {
-    name: 'Sidebar',
-    computed: {
-      time () {
-        return this.$store.state.totalTime
-      }
-    }
+    name: 'Sidebar'
   }
 </script>

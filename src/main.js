@@ -9,14 +9,18 @@ import Video from './components/Video.vue'
 import Res from './components/Res.vue'
 import Bonus from './components/Bonus.vue'
 import Js from './components/JS.vue'
+import Element from 'element-ui'
 
 import VueResource from 'vue-resource'
 import axios from 'axios'
 import 'bootstrap/dist/css/bootstrap.css'
+import '../src/base.css'
+import 'element-ui/lib/theme-default/index.css'
 
 Vue.use(VueRouter)
 Vue.use(VueResource)
 Vue.use(axios)
+Vue.use(Element)
 
 axios.defaults.timeout = 5000
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'

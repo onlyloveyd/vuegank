@@ -1,34 +1,22 @@
 <template>
   <div id="wrapper">
-    <nav class="navbar navbar-default">
-      <div class="container">
-        <a class="navbar-brand" href="#">
-          <i class="glyphicon glyphicon-time"></i>
-          干货集中营
-        </a>
-        <ul class="nav navbar-nav">
-          <li>
-            <router-link to="/android">Android</router-link>
-          </li>
-          <li>
-            <router-link to="/ios">iOS</router-link>
-          </li>
-          <li>
-            <router-link to="/video">休息视频</router-link>
-          </li>
-          <li>
-            <router-link to="/js">前端</router-link>
-          </li>
-          <li>
-            <router-link to="/res">拓展资源</router-link>
-          </li>
-          <li>
-            <router-link to="/bonus">妹纸</router-link>
-          </li>
-        </ul>
-      </div>
-    </nav>
-    <div class="container">
+    <div>
+      <el-menu theme="dark" default-active="1" class="el-menu-demo" mode="horizontal" @select="handleSelect" router>
+        <el-menu-item>
+          <a class="navbar-brand" href="#">
+            <i class="glyphicon glyphicon-time"></i>
+            干货集中营
+          </a>
+        </el-menu-item>
+        <el-menu-item index="/android">Android</el-menu-item>
+        <el-menu-item index="/ios">iOS</el-menu-item>
+        <el-menu-item index="/video">休息视频</el-menu-item>
+        <el-menu-item index="/js">前端</el-menu-item>
+        <el-menu-item index="/res">拓展资源</el-menu-item>
+        <el-menu-item index="/bonus">妹纸</el-menu-item>
+      </el-menu>
+    </div>
+    <div>
       <div class="col-xs-3 col-sm-3 col-sm-push-9">
         <sidebar></sidebar>
       </div>
@@ -41,6 +29,7 @@
 
 <script>
   import Sidebar from './components/Sidebar.vue'
+
   export default {
     name: 'app',
     components: {

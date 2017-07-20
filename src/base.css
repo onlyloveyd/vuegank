@@ -1,0 +1,48 @@
+#focus {
+  text-align: left;
+  align-self: center;
+}
+
+#focus ul {
+  width: 100%;
+  border-bottom: none;
+  align-self: center;
+}
+
+#focus p {
+  margin: 0;
+}
+
+#focus li {
+  width: 100%;
+  display: block;
+  border-bottom: 1px solid #ddd;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  margin: 0rem;
+  cursor: default;
+}
+
+.ftitle {
+  align:left;
+}
+
+.details {
+  float: none;
+  width: 100%;
+}
+
+.clearfix {
+  clear: both;
+}
+.nextpage {
+  float:right;
+  margin-top:1rem;
+  margin-bottom:1rem;
+}
+.prevpage {
+  float:left;
+  margin-top:1rem;
+  margin-bottom:1rem;
+  margin-left: 7rem;
+}

@@ -1,18 +1,20 @@
 <template id="gankdata">
   <div id="focus">
-    <ul >
-      <li v-for="(item , index) in focusList">
-        <div class="details">
-          <a :href="item.url" target=_blank>
-            <div class="ftitle"><strong> {{ item.desc }} </strong></div>
-          </a>
-          <p align="right">{{ item.who }} </p>
-        </div>
-        <div class="clearfix"></div>
-      </li>
+    <ul>
+      <el-row>
+        <el-col :span="4" v-for="(item, index) in focusList">
+            <el-card :body-style="{ padding: '0px' }">
+              <img :alt="item.desc" title="点击查看原图" class="image" :src="item.url" v-on:click="showElDialog(item.url)"/>
+              <el-dialog title="原图" :visible.sync="dialogTableVisible">
+                <img :src="currentUrl" width="100%" height="100%">
+              </el-dialog>
+            </el-card>
+        </el-col>
+      </el-row>
     </ul>
-    <button class="btn prevpage" @click="getFocusList(--index)">上一页</button>
-    <button class="btn nextpage" @click="getFocusList(++index)">下一页</button>
+    <el-button type="primary prevpage" icon="arrow-left" @click="getFocusList(--index)">上一页</el-button>
+    <el-button type="primary nextpage" @click="getFocusList(++index)">下一页<i
+      class="el-icon-arrow-right el-icon--right"></i></el-button>
   </div>
 </template>
 <script>
@@ -20,7 +22,9 @@
     data () {
       return {
         focusList: [],
-        index: 1
+        index: 1,
+        dialogTableVisible: false,
+        currentUrl: null
       }
     },
     mounted () {
@@ -32,63 +36,37 @@
           index = 1
         }
         var vm = this
-        this.$http.get('http://gank.io/api/data/福利/10/' + index)
+        this.$http.get('http://gank.io/api/data/福利/20/' + index)
           .then(function (res) {
             vm.focusList = res.data.results
           })
           .catch(function (err) {
             console.log(err)
           })
+      },
+      showElDialog (url) {
+        this.currentUrl = url
+        this.dialogTableVisible = true
       }
     }
   }
 </script>
 <style scoped>
-  #focus {
-    text-align: left;
-  }
-
-  #focus ul {
-    margin: 0 auto;
-    width: 100%;
-    border-bottom: none;
-  }
-
-  #focus p {
-    margin: 0;
-  }
-
-  #focus li {
-    width: 100%;
-    display: block;
-    border-bottom: 1px solid #ddd;
-    padding: 0.5rem 2rem;
-    cursor: default;
-  }
-
-  #focus img {
-    height: 10rem;
-    width: 10rem;
-    margin-left: -1rem;
-  }
-
-  .details {
-    float: none;
-    width: 100%;
-  }
-
-  .clearfix {
-    clear: both;
-  }
   .nextpage {
-    float:right;
-    margin-top: 4rem;
-    background: whitesmoke;
+    float: right;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
   }
+
   .prevpage {
-    float:left;
-    margin-top: 4rem;
-    margin-left: 4rem;
-    background: whitesmoke;
+    float: left;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    margin-left: 3rem;
+  }
+  .image {
+    height: 25rem;
+    width: 25rem;
+    margin-left: -1rem;
   }
 </style>
