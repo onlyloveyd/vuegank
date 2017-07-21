@@ -1,5 +1,5 @@
 <template id="gankdata">
-  <div id="focus">
+  <div id="focus" v-loading="loading">
     <ul>
       <el-row>
         <el-col :span="4" v-for="(item, index) in focusList">
@@ -24,24 +24,42 @@
         focusList: [],
         index: 1,
         dialogTableVisible: false,
-        currentUrl: null
+        currentUrl: null,
+        loading: false
       }
     },
-    mounted () {
+    created () {
       this.getFocusList(1)
+    },
+    mounted () {
+
     },
     methods: {
       getFocusList (index) {
+        this.loading = true
         if (index <= 0) {
           index = 1
+          this.$message({
+            showClose: true,
+            message: '已经是第一页',
+            type: 'warning'
+          })
+          this.loading = false
         }
         var vm = this
         this.$http.get('http://gank.io/api/data/福利/20/' + index)
           .then(function (res) {
+            this.loading = false
             vm.focusList = res.data.results
           })
           .catch(function (err) {
             console.log(err)
+            this.loading = false
+            this.$message({
+              showClose: true,
+              message: '数据请求错误',
+              type: 'error'
+            })
           })
       },
       showElDialog (url) {

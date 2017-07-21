@@ -1,5 +1,5 @@
 <template id="gankdata" xmlns="http://www.w3.org/1999/html">
-  <div id="focus">
+  <div id="focus" v-loading="loading">
     <ul>
       <el-row :gutter="20" v-for="(item, index) in focusList">
         <el-card class="box-card">
@@ -18,7 +18,7 @@
               <p align="right">{{ item.who }} </p>
               <br>
               <p align="right">
-                <el-tag align="right" type="gray">Android</el-tag>
+                <el-tag align="right" type="danger">{{$route.params.id}}</el-tag>
               </p>
             </el-col>
           </div>
@@ -39,14 +39,32 @@
         focusList: [],
         index: 1,
         dialogTableVisible: false,
-        currentUrl: null
+        currentUrl: null,
+        category: null,
+        loading: false
       }
     },
-    mounted () {
+    created () {
+      this.category = this.$route.params.id
+      console.log(this.category)
       this.getFocusList(1)
+    },
+    mounted () {
+
+    },
+    watch: {
+      '$route' (to, from) {
+        // 对路由变化作出响应...
+        console.log(to, from)
+        var temp = to.fullPath.split('/')
+        console.log(temp)
+        this.category = temp[2]
+        this.getFocusList(1)
+      }
     },
     methods: {
       getFocusList (index) {
+        this.loading = true
         if (index <= 0) {
           index = 1
           this.$message({
@@ -54,14 +72,22 @@
             message: '已经是第一页',
             type: 'warning'
           })
+          this.loading = false
         }
         var vm = this
-        this.$http.get('http://gank.io/api/data/休息视频/10/' + index)
+        this.$http.get('http://gank.io/api/data/' + this.category + '/10/' + index)
           .then(function (res) {
+            this.loading = false
             vm.focusList = res.data.results
           })
           .catch(function (err) {
             console.log(err)
+            this.loading = false
+            this.$message({
+              showClose: true,
+              message: '数据请求错误',
+              type: 'error'
+            })
           })
       },
       showElDialog (url) {
